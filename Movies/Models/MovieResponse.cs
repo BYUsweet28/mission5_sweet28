@@ -12,7 +12,9 @@ namespace Movies.Models
         [Required]
         public int MovieId { get; set; }
         [Required]
-        public string Category { get; set; }
+        //Build Foreign Key Relationship
+        public int CategoryID { get; set; }
+        public Category Category { get; set; }
         [Required]
         public string Title { get; set; }
         [Required]
@@ -23,7 +25,7 @@ namespace Movies.Models
         public string Rating { get; set; }
         public bool Edited { get; set; }
         public string LentTo { get; set; }
-        [Range(0, 25, ErrorMessage = "Please enter a valid number between 0 and 100")]
+        [MaxLength(25, ErrorMessage = "25 Characters Max")]
         public string Notes { get; set; }
     }
 }

@@ -15,15 +15,80 @@ namespace Movies.Migrations
             modelBuilder
                 .HasAnnotation("ProductVersion", "3.1.32");
 
+            modelBuilder.Entity("Movies.Models.Category", b =>
+                {
+                    b.Property<int>("CategoryID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("CategoryName")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("CategoryID");
+
+                    b.ToTable("Categories");
+
+                    b.HasData(
+                        new
+                        {
+                            CategoryID = 1,
+                            CategoryName = "Action/Adventure"
+                        },
+                        new
+                        {
+                            CategoryID = 2,
+                            CategoryName = "Comedy"
+                        },
+                        new
+                        {
+                            CategoryID = 3,
+                            CategoryName = "Drama"
+                        },
+                        new
+                        {
+                            CategoryID = 4,
+                            CategoryName = "Family"
+                        },
+                        new
+                        {
+                            CategoryID = 5,
+                            CategoryName = "Horror/Suspense"
+                        },
+                        new
+                        {
+                            CategoryID = 6,
+                            CategoryName = "Action/Adventure"
+                        },
+                        new
+                        {
+                            CategoryID = 7,
+                            CategoryName = "Miscellaneous"
+                        },
+                        new
+                        {
+                            CategoryID = 8,
+                            CategoryName = "Televeision"
+                        },
+                        new
+                        {
+                            CategoryID = 9,
+                            CategoryName = "Action/Adventure"
+                        },
+                        new
+                        {
+                            CategoryID = 10,
+                            CategoryName = "VHS"
+                        });
+                });
+
             modelBuilder.Entity("Movies.Models.MovieResponse", b =>
                 {
                     b.Property<int>("MovieId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("Category")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
+                    b.Property<int>("CategoryID")
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("Director")
                         .IsRequired()
@@ -51,13 +116,15 @@ namespace Movies.Migrations
 
                     b.HasKey("MovieId");
 
+                    b.HasIndex("CategoryID");
+
                     b.ToTable("Responses");
 
                     b.HasData(
                         new
                         {
                             MovieId = 1,
-                            Category = "Comedy",
+                            CategoryID = 1,
                             Director = "Jared Hess",
                             Edited = false,
                             LentTo = "Max",
@@ -69,7 +136,7 @@ namespace Movies.Migrations
                         new
                         {
                             MovieId = 2,
-                            Category = "Family",
+                            CategoryID = 2,
                             Director = "Chris Columbus",
                             Edited = true,
                             Rating = "PG",
@@ -79,7 +146,7 @@ namespace Movies.Migrations
                         new
                         {
                             MovieId = 3,
-                            Category = "Action/Adventure",
+                            CategoryID = 3,
                             Director = "Steven Speilberg",
                             Edited = true,
                             Notes = "Watch out for velociraptors",
@@ -87,6 +154,15 @@ namespace Movies.Migrations
                             Title = "Jurrasic Park",
                             Year = 1993
                         });
+                });
+
+            modelBuilder.Entity("Movies.Models.MovieResponse", b =>
+                {
+                    b.HasOne("Movies.Models.Category", "Category")
+                        .WithMany()
+                        .HasForeignKey("CategoryID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }
