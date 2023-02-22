@@ -8,6 +8,8 @@ namespace Movies.Models
 {
     public class MovieResponse
     {
+
+        // Movie Response Model
         [Key]
         [Required]
         public int MovieId { get; set; }
